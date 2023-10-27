@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario Fruver</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="info">
+        <h1>INVENTARIO FRUVER</h1>
+        <p>Ingresa los datos del producto para calcular la ganancia:</p>
+        <input type="text" id="productName" placeholder="Nombre del producto"><br>
+        <input type="number" id="buyPrice" placeholder="Precio de compra"><br>
+        <input type="number" id="sellPrice" placeholder="Precio de venta"><br><br>
+        <button onclick="calculateRevenue()">Calcular Ganancia</button>
+        <h2>Lista de Productos</h2>
+        <ul id="productList"></ul>
+    </div>
+    <script>
+        // Definimos un arreglo para almacenar la información de los productos
+        const products = [];
+
+        // Función para calcular la ganancia y mostrarla en el DOM
+        function calculateRevenue() {
+            const productName = document.getElementById("productName").value;
+            const buyPrice = parseFloat(document.getElementById("buyPrice").value);
+            const sellPrice = parseFloat(document.getElementById("sellPrice").value);
+
+            // Calculamos la ganancia
+            const ganancia = sellPrice - buyPrice;
+
+            // Creamos un objeto con la información del producto
+            const product = {
+                nombre: productName,
+                buyPrice: buyPrice,
+                sellPrice: sellPrice,
+                ganancia: ganancia
+            };
+
+            // Agregamos el producto al arreglo
+            products.push(product);
+
+            // Actualizamos la lista en el DOM
+            updateList();
+
+            // Limpiamos los campos de entrada
+            document.getElementById("productName").value = "";
+            document.getElementById("buyPrice").value = "";
+            document.getElementById("sellPrice").value = "";
+        }
+
+        // Función para actualizar la lista de productos en el DOM
+        function updateList() {
+            const productList = document.getElementById("productList");
+            productList.innerHTML = "";
+
+            products.forEach((producto, index) => {
+                const li = document.createElement("li");
+                li.textContent = `Producto ${index + 1}: ${producto.nombre}, Precio de Compra: $${producto.buyPrice}, Precio de Venta: $${producto.sellPrice}, Ganancia: $${producto.ganancia}`;
+                productList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
